@@ -12,7 +12,7 @@ abstract class FirebaseRepository {
   Future<String> getCurrentUId();
 
   // Future<String> createOneToOneChatChannel(EngageUserEntity engageUserEntity);
-  Future<String> getChannelId(EngageUserEntity engageUserEntity);
+  // Future<String> getChannelId(EngageUserEntity engageUserEntity);
   Future<void> createNewGroup(
       MyChatEntity myChatEntity, List<String> selectUserList);
   Future<void> getCreateNewGroupChatRoom(

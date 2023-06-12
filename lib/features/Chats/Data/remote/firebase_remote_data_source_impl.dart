@@ -22,23 +22,23 @@ class FirebaseRemoteDataSourceImpl implements FirebaseRemoteDataSource {
   @override
   Future<String> getCurrentUId() async => auth.currentUser!.uid;
 
-  @override
-  Future<String> getChannelId(EngageUserEntity engageUserEntity) {
-    final userCollectionRef = fireStore.collection("users");
-    print(
-        "uid ${engageUserEntity.uid} - otherUid ${engageUserEntity.otherUid}");
-    return userCollectionRef
-        .doc(engageUserEntity.uid)
-        .collection('chatChannel')
-        .doc(engageUserEntity.otherUid)
-        .get()
-        .then((chatChannelId) {
-      if (chatChannelId.exists) {
-        return chatChannelId.get('channelId');
-      } else
-        return Future.value(null);
-    });
-  }
+  // @override
+  // Future<String> getChannelId(EngageUserEntity engageUserEntity) {
+  //   final userCollectionRef = fireStore.collection("users");
+  //   print(
+  //       "uid ${engageUserEntity.uid} - otherUid ${engageUserEntity.otherUid}");
+  //   return userCollectionRef
+  //       .doc(engageUserEntity.uid)
+  //       .collection('chatChannel')
+  //       .doc(engageUserEntity.otherUid)
+  //       .get()
+  //       .then((chatChannelId) {
+  //     if (chatChannelId.exists) {
+  //       return chatChannelId.get('channelId');
+  //     } else
+  //       return Future.value(null);
+  //   });
+  // }
 
   // @override
   // Future<String> createOneToOneChatChannel(

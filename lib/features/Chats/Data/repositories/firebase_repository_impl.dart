@@ -29,10 +29,10 @@ class FirebaseRepositoryImpl implements FirebaseRepository {
     return remoteDataSource.getMessages(channelId);
   }
 
-  @override
-  Future<String> getChannelId(EngageUserEntity engageUserEntity) async {
-    return remoteDataSource.getChannelId(engageUserEntity);
-  }
+  // @override
+  // Future<String> getChannelId(EngageUserEntity engageUserEntity) async {
+  //   return remoteDataSource.getChannelId(engageUserEntity);
+  // }
 
   // @override
   // Future<void> addToMyChat(MyChatEntity myChatEntity) async {

@@ -11,3 +11,5 @@ class SendMyTextMessage {
     return await repository.sendTextMessage(textMessageEntity, channelId);
   }
 }
+
+// SUS
