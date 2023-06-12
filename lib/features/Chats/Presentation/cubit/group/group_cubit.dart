@@ -51,7 +51,7 @@ class GroupCubit extends Cubit<GroupState> {
   }
 
   Future<void> updateGroup({required GroupEntity groupEntity}) async {
-    // TO DO
+    // nota
     try {
       await groupUseCase.call(groupEntity);
     } on SocketException catch (_) {

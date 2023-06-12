@@ -48,7 +48,6 @@ class _SingleChatPageState extends State<SingleChatPage> {
     });
     BlocProvider.of<ChatCubit>(context)
         .getMessages(channelId: widget.singleChatEntity.groupId);
-    //FIXME: call get all messages
     super.initState();
   }
 
@@ -308,7 +307,6 @@ class _SingleChatPageState extends State<SingleChatPage> {
 
           if (message.senderId == widget.singleChatEntity.uid) {
             print(message.type);
-            // ignore: curly_braces_in_flow_control_structures
             if (message.type == 'TEXT') {
               return _messageLayout(
                 name: "Me",

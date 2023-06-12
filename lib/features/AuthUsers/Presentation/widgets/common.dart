@@ -76,7 +76,6 @@ void toast(String message) {
       fontSize: 16.0);
 }
 
-//TODO:common button [Today,this week,this month]
 Widget verticalDivider() {
   return Container(
     margin: EdgeInsets.symmetric(horizontal: 4),

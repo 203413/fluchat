@@ -51,49 +51,10 @@ class AuthFirebaseRemoteDataSourceImpl implements AuthFirebaseRemoteDataSource {
   @override
   Future<bool> isSignIn() async => auth.currentUser?.uid != null;
 
-  // @override
-  // Future<void> signInWithPhoneNumber(String pinCode) async {
-  //   // TO DO
-  //   final AuthCredential authCredential = PhoneAuthProvider.credential(
-  //       verificationId: _verificationId, smsCode: pinCode);
-  //   await auth.signInWithCredential(authCredential);
-  // }
-
   @override
   Future<void> signOut() async {
     await auth.signOut();
   }
-
-  // @override
-  // Future<void> verifyPhoneNumber(String phoneNumber) async {
-  //   // TO DO
-  //   final PhoneVerificationCompleted phoneVerificationCompleted =
-  //       (AuthCredential authCredential) {
-  //     print("phone is verified : token ${authCredential.token}");
-  //   };
-  //   final PhoneVerificationFailed phoneVerificationFailed =
-  //       (FirebaseAuthException authCredential) {
-  //     print("phone failed ${authCredential.message},${authCredential.code}");
-  //   };
-  //   final PhoneCodeAutoRetrievalTimeout phoneCodeAutoRetrievalTimeout =
-  //       (String verificationId) {
-  //     this._verificationId = verificationId;
-  //     print("time out $verificationId");
-  //   };
-  //   final PhoneCodeSent phoneCodeSent =
-  //       (String verificationID, [int? forceResendingToken]) {
-  //     this._verificationId = verificationID;
-  //     print("sendPhoneCode $verificationID");
-  //   };
-
-  //   auth.verifyPhoneNumber(
-  //       phoneNumber: phoneNumber,
-  //       timeout: const Duration(seconds: 5),
-  //       verificationCompleted: phoneVerificationCompleted,
-  //       verificationFailed: phoneVerificationFailed,
-  //       codeSent: phoneCodeSent,
-  //       codeAutoRetrievalTimeout: phoneCodeAutoRetrievalTimeout);
-  // }
 
   @override
   Stream<List<UserEntity>> getAllUsers() {
@@ -118,7 +79,6 @@ class AuthFirebaseRemoteDataSourceImpl implements AuthFirebaseRemoteDataSource {
       usersCollection.doc(auth.currentUser!.uid).get().then((user) async {
         if (!user.exists) {
           var uid = auth.currentUser!.uid;
-          //TODO Initialize currentUser if not exist record
           var newUser = UserModel(
                   name: information!.displayName!,
                   email: information.email!,
@@ -145,11 +105,6 @@ class AuthFirebaseRemoteDataSourceImpl implements AuthFirebaseRemoteDataSource {
       print(e);
     }
   }
-
-  // @override
-  // Future<void> forgotPassword(String email) async {
-  //   await auth.sendPasswordResetEmail(email: email);
-  // }
 
   @override
   Future<void> signIn(UserEntity user) async {

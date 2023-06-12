@@ -6,7 +6,6 @@ import 'package:proyecto_c2/features/AuthUsers/Data/remote/firebase_remote_data_
 import 'package:proyecto_c2/features/AuthUsers/Data/remote/firebase_remote_data_source_impl.dart';
 import 'package:proyecto_c2/features/AuthUsers/Data/repositories/firebase_repository_impl.dart';
 import 'package:proyecto_c2/features/AuthUsers/Domain/repositories/firebase_repository.dart';
-import 'package:proyecto_c2/features/AuthUsers/Domain/use_cases/forgot_password_usecase.dart';
 import 'package:proyecto_c2/features/AuthUsers/Domain/use_cases/get_all_users_usecase.dart';
 import 'package:proyecto_c2/features/AuthUsers/Domain/use_cases/get_create_current_user_usecase.dart';
 import 'package:proyecto_c2/features/AuthUsers/Domain/use_cases/get_current_uid_usecase.dart';
@@ -42,7 +41,6 @@ Future<void> init() async {
         getCurrentUIDUseCase: sl.call(),
       ));
   sl.registerFactory<CredentialCubit>(() => CredentialCubit(
-      // forgotPasswordUseCase: sl.call(),
       getCreateCurrentUserUseCase: sl.call(),
       signInUseCase: sl.call(),
       signUpUseCase: sl.call(),
@@ -66,8 +64,6 @@ Future<void> init() async {
   //UseCases
   sl.registerLazySingleton<GoogleSignInUseCase>(
       () => GoogleSignInUseCase(repository: sl.call()));
-  // sl.registerLazySingleton<ForgotPasswordUseCase>(
-  //     () => ForgotPasswordUseCase(repository: sl.call()));
   sl.registerLazySingleton<GetCreateCurrentUserUseCase>(
       () => GetCreateCurrentUserUseCase(repository: sl.call()));
   sl.registerLazySingleton<GetCurrentUIDUseCase>(

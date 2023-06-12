@@ -11,27 +11,26 @@ class GroupEntity extends Equatable {
   final String uid;
   final String lastMessage;
 
- GroupEntity({
-    this.groupName="",
-    this.groupProfileImage="",
-    this.joinUsers="",
-    this.limitUsers="",
+  GroupEntity({
+    this.groupName = "",
+    this.groupProfileImage = "",
+    this.joinUsers = "",
+    this.limitUsers = "",
     this.creationTime,
-    this.groupId="",
-    this.uid="",
-    this.lastMessage="",
+    this.groupId = "",
+    this.uid = "",
+    this.lastMessage = "",
   });
 
   @override
-  // TODO: implement props
   List<Object> get props => [
-    groupName,
-    groupProfileImage,
-    joinUsers,
-    uid,
-    limitUsers,
-    creationTime!,
-    groupId,
-    lastMessage,
+        groupName,
+        groupProfileImage,
+        joinUsers,
+        uid,
+        limitUsers,
+        creationTime!,
+        groupId,
+        lastMessage,
       ];
 }

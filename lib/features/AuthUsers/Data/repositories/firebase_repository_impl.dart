@@ -18,27 +18,14 @@ class AuthFirebaseRepositoryImpl implements AuthFirebaseRepository {
   @override
   Future<bool> isSignIn() async => await remoteDataSource.isSignIn();
 
-  // @override
-  // Future<void> signInWithPhoneNumber(String pinCode) async =>
-  //     await remoteDataSource.signInWithPhoneNumber(pinCode);
-
   @override
   Future<void> signOut() async => await remoteDataSource.signOut();
-
-  // @override
-  // Future<void> verifyPhoneNumber(String phoneNumber) async {
-  //   await remoteDataSource.verifyPhoneNumber(phoneNumber);
-  // }
 
   @override
   Stream<List<UserEntity>> getAllUsers() => remoteDataSource.getAllUsers();
 
   @override
   Future<void> googleAuth() async => remoteDataSource.googleAuth();
-
-  // @override
-  // Future<void> forgotPassword(String email) async =>
-  //     remoteDataSource.forgotPassword(email);
 
   @override
   Future<void> signIn(UserEntity user) async => remoteDataSource.signIn(user);

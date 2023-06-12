@@ -1,13 +1,7 @@
 import '../../Domain/entities/user_entity.dart';
 
 abstract class AuthFirebaseRemoteDataSource {
-  // Future<void> verifyPhoneNumber(String phoneNumber);
-
   Future<void> getCreateCurrentUser(UserEntity user);
-
-  // Future<void> signInWithPhoneNumber(String pinCode);
-
-  // Future<void> forgotPassword(String email);
 
   Future<void> signIn(UserEntity user);
 

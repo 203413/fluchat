@@ -17,7 +17,8 @@ class MyChatEntity extends Equatable {
   final String? subjectName;
   final String? communicationType;
 
-  MyChatEntity({this.senderName,
+  MyChatEntity({
+    this.senderName,
     this.recipientName,
     this.channelId,
     this.recipientUID,
@@ -28,14 +29,13 @@ class MyChatEntity extends Equatable {
     this.time,
     this.isArchived,
     this.recipientPhoneNumber,
-    this.senderPhoneNumber, this.subjectName,
+    this.senderPhoneNumber,
+    this.subjectName,
     this.communicationType,
   });
 
   @override
-  // TODO: implement props
-  List<Object> get props =>
-      [
+  List<Object> get props => [
         senderName!,
         recipientName!,
         channelId!,

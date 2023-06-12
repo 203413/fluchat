@@ -3,7 +3,6 @@ import 'package:proyecto_c2/features/AuthUsers/Domain/entities/user_entity.dart'
 abstract class AuthFirebaseRepository {
   Future<void> getCreateCurrentUser(UserEntity user);
   Future<void> googleAuth();
-  // Future<void> forgotPassword(String email);
   Future<bool> isSignIn();
   Future<void> signIn(UserEntity user);
   Future<void> signUp(UserEntity user);
