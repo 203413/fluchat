@@ -59,35 +59,35 @@ class FirebaseRemoteDataSourceImpl implements FirebaseRemoteDataSource {
         .toList());
   }
 
-  _createGroup(MyChatEntity myChatEntity, List<String> selectUserList) async {
-    final myNewChatCurrentUser = MyChatModel(
-      channelId: myChatEntity.channelId,
-      senderName: myChatEntity.senderName,
-      time: myChatEntity.time,
-      recipientName: myChatEntity.recipientName,
-      recipientPhoneNumber: myChatEntity.recipientPhoneNumber,
-      recipientUID: myChatEntity.recipientUID,
-      senderPhoneNumber: myChatEntity.senderPhoneNumber,
-      senderUID: myChatEntity.senderUID,
-      profileUrl: myChatEntity.profileUrl,
-      isArchived: myChatEntity.isArchived,
-      isRead: myChatEntity.isRead,
-      recentTextMessage: myChatEntity.recentTextMessage,
-      subjectName: myChatEntity.subjectName,
-    ).toDocument();
-    print("sender Id ${myChatEntity.senderUID}");
-    await fireStore
-        .collection("users")
-        .doc(myChatEntity.senderUID)
-        .collection("myChat")
-        .doc(myChatEntity.channelId)
-        .set(myNewChatCurrentUser)
-        .then((value) {
-      print("data created");
-    }).catchError((error) {
-      print("dataError $error");
-    });
-  }
+  // _createGroup(MyChatEntity myChatEntity, List<String> selectUserList) async {
+  //   final myNewChatCurrentUser = MyChatModel(
+  //     channelId: myChatEntity.channelId,
+  //     senderName: myChatEntity.senderName,
+  //     time: myChatEntity.time,
+  //     recipientName: myChatEntity.recipientName,
+  //     recipientPhoneNumber: myChatEntity.recipientPhoneNumber,
+  //     recipientUID: myChatEntity.recipientUID,
+  //     senderPhoneNumber: myChatEntity.senderPhoneNumber,
+  //     senderUID: myChatEntity.senderUID,
+  //     profileUrl: myChatEntity.profileUrl,
+  //     isArchived: myChatEntity.isArchived,
+  //     isRead: myChatEntity.isRead,
+  //     recentTextMessage: myChatEntity.recentTextMessage,
+  //     subjectName: myChatEntity.subjectName,
+  //   ).toDocument();
+  //   print("sender Id ${myChatEntity.senderUID}");
+  //   await fireStore
+  //       .collection("users")
+  //       .doc(myChatEntity.senderUID)
+  //       .collection("myChat")
+  //       .doc(myChatEntity.channelId)
+  //       .set(myNewChatCurrentUser)
+  //       .then((value) {
+  //     print("data created");
+  //   }).catchError((error) {
+  //     print("dataError $error");
+  //   });
+  // }
 
   @override
   Future<void> getCreateGroup(GroupEntity groupEntity) async {

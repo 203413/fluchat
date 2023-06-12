@@ -1,4 +1,4 @@
-import 'package:proyecto_c2/features/AuthUsers/Data/remote/firebase_remote_data_source.dart';
+import 'package:proyecto_c2/features/AuthUsers/Data/datasources/firebase_remote_data_source.dart';
 import 'package:proyecto_c2/features/AuthUsers/Domain/entities/user_entity.dart';
 import 'package:proyecto_c2/features/AuthUsers/Domain/repositories/firebase_repository.dart';
 

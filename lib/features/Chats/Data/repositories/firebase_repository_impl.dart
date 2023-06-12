@@ -1,4 +1,4 @@
-import 'package:proyecto_c2/features/Chats/Data/remote/firebase_remote_data_source.dart';
+import 'package:proyecto_c2/features/Chats/Data/datasources/firebase_remote_data_source.dart';
 import 'package:proyecto_c2/features/Chats/Domain/entities/group_entity.dart';
 import 'package:proyecto_c2/features/Chats/Domain/entities/my_chat_entity.dart';
 import 'package:proyecto_c2/features/Chats/Domain/entities/text_messsage_entity.dart';

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:proyecto_c2/features/AuthUsers/Data/remote/storage_provider.dart';
+import 'package:proyecto_c2/features/AuthUsers/Data/datasources/storage_provider.dart';
 import 'package:proyecto_c2/features/AuthUsers/Domain/entities/user_entity.dart';
 import 'package:proyecto_c2/features/AuthUsers/Presentation/cubit/auth/auth_cubit.dart';
 import 'package:proyecto_c2/features/AuthUsers/Presentation/cubit/credential/credential_cubit.dart';
