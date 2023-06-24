@@ -1,9 +1,10 @@
 import 'dart:async';
 import 'dart:io';
-
+import 'dart:typed_data';
 import 'package:bubble/bubble.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -15,9 +16,11 @@ import 'package:proyecto_c2/features/Chats/Domain/entities/text_messsage_entity.
 import 'package:proyecto_c2/features/Chats/Presentation/cubit/chat/chat_cubit.dart';
 import 'package:proyecto_c2/features/Chats/Presentation/cubit/group/group_cubit.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:video_player/video_player.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:video_thumbnail/video_thumbnail.dart';
 
 class SingleChatPage extends StatefulWidget {
   final SingleChatEntity singleChatEntity;
@@ -38,7 +41,7 @@ class _SingleChatPageState extends State<SingleChatPage> {
   bool _changeKeyboardType = false;
   int _menuIndex = 0;
   ImagePicker _imagePicker = ImagePicker();
-  VideoPlayerController? _videoPlayerController;
+  VideoPlayerController? _vidController;
   AudioPlayer _audioPlayer = AudioPlayer();
 
   @override
@@ -46,6 +49,7 @@ class _SingleChatPageState extends State<SingleChatPage> {
     _messageController.addListener(() {
       setState(() {});
     });
+
     BlocProvider.of<ChatCubit>(context)
         .getMessages(channelId: widget.singleChatEntity.groupId);
     super.initState();
@@ -55,7 +59,7 @@ class _SingleChatPageState extends State<SingleChatPage> {
   void dispose() {
     _messageController.dispose();
     _scrollController.dispose();
-    _videoPlayerController?.dispose();
+    _vidController?.dispose();
     _audioPlayer.dispose();
     super.dispose();
   }
@@ -537,7 +541,7 @@ class _SingleChatPageState extends State<SingleChatPage> {
     String? name,
     alignName,
   }) {
-    print(url);
+    final Uri vidurl = Uri.parse(url);
     return Column(
       crossAxisAlignment: crossAlign,
       children: [
@@ -560,11 +564,34 @@ class _SingleChatPageState extends State<SingleChatPage> {
                     textAlign: alignName,
                     style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
                   ),
-                  Text(
-                    url,
-                    textAlign: align,
-                    style: TextStyle(fontSize: 16),
+                  RichText(
+                    text: TextSpan(
+                      text: url,
+                      style: TextStyle(color: Colors.blue),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          _launchURL(url.toString());
+                        },
+                    ),
                   ),
+                  // Text(
+                  //   url,
+                  //   textAlign: align,
+                  //   style: TextStyle(fontSize: 16),
+                  // ),
+                  // FutureBuilder<String?>(
+                  //   future: generateThumbnail(url),
+                  //   builder: (context, AsyncSnapshot<String?> snapshot) {
+                  //     if (snapshot.connectionState == ConnectionState.done) {
+                  //       if (snapshot.hasData && snapshot.data != null) {
+                  //         return Image.memory(snapshot.data! as Uint8List);
+                  //       } else if (snapshot.hasError) {
+                  //         return Text('Error al generar el thumbnail');
+                  //       }
+                  //     }
+                  //     return CircularProgressIndicator();
+                  //   },
+                  // ),
                   Text(
                     time,
                     textAlign: align,
@@ -651,5 +678,42 @@ class _SingleChatPageState extends State<SingleChatPage> {
     String url = await taskSnapshot.ref.getDownloadURL();
 
     return url;
+  }
+
+  // Future<void> setVideo(String url) async {
+  //   print(url);
+  //   _vidController = VideoPlayerController.network(url)
+  //     ..initialize().then((_) {
+  //       setState(() {});
+  //     });
+  // }
+
+  // Future<String?> generateThumbnail(String videoUrl) async {
+  //   print("hola");
+  //   print("holaaa" + videoUrl);
+  //   final thumbnail = await VideoThumbnail.thumbnailFile(
+  //     video: videoUrl,
+  //     imageFormat: ImageFormat.JPEG,
+  //     maxHeight: 64,
+  //     quality: 25,
+  //   );
+  //   return thumbnail;
+  // }
+
+  redirect(String vid) async {
+    final Uri url = Uri.parse(vid);
+    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+      throw Exception('Could not launch $url');
+    }
+  }
+
+  Future<void> _launchURL(String url) async {
+    final Uri uri = Uri(scheme: "https", host: url);
+    if (!await launchUrl(
+      uri,
+      mode: LaunchMode.externalApplication,
+    )) {
+      throw "Can not launch url";
+    }
   }
 }
