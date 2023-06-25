@@ -41,13 +41,14 @@ class _AllUsersPageState extends State<AllUsersPage> {
                                 Icon(
                                   Icons.group,
                                   size: 40,
-                                  color: Colors.black.withOpacity(.4),
+                                  color: Color.fromARGB(255, 0, 0, 0)
+                                      .withOpacity(.4),
                                 ),
                                 SizedBox(
                                   height: 10,
                                 ),
                                 Text(
-                                  "No Users Found yet",
+                                  "Aún no hay usuarios",
                                   style: TextStyle(
                                       color: Colors.black.withOpacity(.2)),
                                 )

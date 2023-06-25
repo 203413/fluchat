@@ -38,7 +38,8 @@ class _LoginPageState extends State<LoginPage> {
           }
           if (credentialState is CredentialFailure) {
             snackBarNetwork(
-                msg: "wrong email please check", scaffoldState: _scaffoldState);
+                msg: "Correo incorrecto, intente de nuevo.",
+                scaffoldState: _scaffoldState);
           }
         },
         builder: (context, credentialState) {
@@ -55,7 +56,7 @@ class _LoginPageState extends State<LoginPage> {
                     uid: authState.uid,
                   );
                 } else {
-                  print("Unauthenticsted");
+                  print("No autentificado");
                   return _bodyWidget();
                 }
               },
@@ -80,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
             Container(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  'Login',
+                  'Iniciar sesión',
                   style: TextStyle(
                       fontSize: 35,
                       fontWeight: FontWeight.w700,
@@ -91,6 +92,8 @@ class _LoginPageState extends State<LoginPage> {
             ),
             Divider(
               thickness: 1,
+              endIndent: 15,
+              indent: 15,
             ),
             // Container(
             //   child: SvgPicture.asset('assets/login_image.svg'),
@@ -112,7 +115,7 @@ class _LoginPageState extends State<LoginPage> {
                     Icons.email,
                     color: Colors.grey,
                   ),
-                  hintText: 'Email',
+                  hintText: 'Correo electrónico',
                   hintStyle: TextStyle(
                       color: Colors.grey,
                       fontSize: 17,
@@ -168,7 +171,7 @@ class _LoginPageState extends State<LoginPage> {
                   Navigator.pushNamed(context, PageConst.forgotPage);
                 },
                 child: Text(
-                  'No recuerda su contraseña?',
+                  '¿No recuerdas tu contraseña?',
                   style: TextStyle(
                       color: darkPrimaryColor,
                       fontSize: 16,
@@ -188,11 +191,11 @@ class _LoginPageState extends State<LoginPage> {
                 height: 44,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
-                  color: darkPrimaryColor,
+                  color: Color.fromRGBO(18, 169, 221, 1),
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
                 child: Text(
-                  'Login',
+                  'Iniciar sesión',
                   style: TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.w700,
@@ -208,7 +211,7 @@ class _LoginPageState extends State<LoginPage> {
               child: Row(
                 children: <Widget>[
                   Text(
-                    "no tiene cuenta?",
+                    "¿Aún no tienes cuenta?",
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                   ),
                   SizedBox(
@@ -220,7 +223,7 @@ class _LoginPageState extends State<LoginPage> {
                       Navigator.pushNamed(context, PageConst.registrationPage);
                     },
                     child: Text(
-                      'regístrate!',
+                      ' Crea una',
                       style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
@@ -233,35 +236,46 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(
               height: 20,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    BlocProvider.of<CredentialCubit>(context)
-                        .googleAuthSubmit();
-                  },
-                  child: Container(
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                        color: darkPrimaryColor,
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(.2),
-                            offset: Offset(1.0, 1.0),
-                            spreadRadius: 1,
-                            blurRadius: 1,
-                          )
-                        ]),
-                    child: Icon(
-                      LineIcons.googleLogo,
-                      color: Colors.white,
+            Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "O intenta con:",
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                     ),
                   ),
-                ),
-              ],
+                  SizedBox(height: 20),
+                  GestureDetector(
+                    onTap: () {
+                      BlocProvider.of<CredentialCubit>(context)
+                          .googleAuthSubmit();
+                    },
+                    child: Container(
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                          color: Color.fromRGBO(66, 133, 244, 1),
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(.2),
+                              offset: Offset(1.0, 1.0),
+                              spreadRadius: 1,
+                              blurRadius: 1,
+                            )
+                          ]),
+                      child: Icon(
+                        LineIcons.googlePlusG,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             )
           ],
         ),

@@ -57,7 +57,7 @@ class GroupsPage extends StatelessWidget {
                                         height: 10,
                                       ),
                                       Text(
-                                        "No Group Created yet",
+                                        "Aún no hay grupos aquí",
                                         style: TextStyle(
                                             color:
                                                 Colors.black.withOpacity(.2)),

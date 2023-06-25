@@ -97,7 +97,7 @@ class _SingleChatPageState extends State<SingleChatPage> {
           Expanded(
             child: Container(
               decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: const Color.fromRGBO(229, 244, 249, 1),
                   borderRadius: BorderRadius.all(Radius.circular(80)),
                   boxShadow: [
                     BoxShadow(
@@ -110,14 +110,7 @@ class _SingleChatPageState extends State<SingleChatPage> {
               child: Row(
                 children: [
                   SizedBox(
-                    width: 10,
-                  ),
-                  Icon(
-                    Icons.insert_emoticon,
-                    color: Colors.grey[500],
-                  ),
-                  SizedBox(
-                    width: 10,
+                    width: 20,
                   ),
                   Expanded(
                     child: Container(
@@ -130,7 +123,7 @@ class _SingleChatPageState extends State<SingleChatPage> {
                             maxLines: null,
                             decoration: InputDecoration(
                                 border: InputBorder.none,
-                                hintText: "Type a message"),
+                                hintText: "Escribe algo..."),
                           ),
                         ),
                       ),
@@ -146,7 +139,7 @@ class _SingleChatPageState extends State<SingleChatPage> {
                             url = await uploadFile(
                                 'chatimages/${xFile.name}', File(xFile.path));
                           } else {
-                            print('No se seleccionó ninguna imagen.');
+                            print('No se seleccionó ninguna imágen.');
                           }
                           BlocProvider.of<ChatCubit>(context).sendTextMessage(
                               textMessageEntity: TextMessageEntity(
@@ -165,7 +158,7 @@ class _SingleChatPageState extends State<SingleChatPage> {
                         },
                         child: Icon(
                           LineIcons.imageFile,
-                          color: Colors.grey[500],
+                          color: const Color.fromRGBO(0, 183, 247, 1),
                         ),
                       ),
                       const SizedBox(
@@ -207,7 +200,7 @@ class _SingleChatPageState extends State<SingleChatPage> {
                               },
                               child: Icon(
                                 LineIcons.videoFile,
-                                color: Colors.grey[500],
+                                color: const Color.fromRGBO(0, 183, 247, 1),
                               ),
                             )
                           : Text(""),
@@ -280,8 +273,8 @@ class _SingleChatPageState extends State<SingleChatPage> {
             child: Container(
               width: 45,
               height: 45,
-              decoration: BoxDecoration(
-                  color: darkPrimaryColor,
+              decoration: const BoxDecoration(
+                  color: Color.fromRGBO(0, 183, 247, 1),
                   borderRadius: BorderRadius.all(Radius.circular(50))),
               child: Icon(
                 _messageController.text.isEmpty ? Icons.mic : Icons.send,
@@ -295,10 +288,10 @@ class _SingleChatPageState extends State<SingleChatPage> {
   }
 
   Widget _messagesListWidget(ChatLoaded messages) {
-    Timer(Duration(milliseconds: 100), () {
+    Timer(const Duration(milliseconds: 100), () {
       _scrollController.animateTo(
         _scrollController.position.maxScrollExtent,
-        duration: Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 300),
         curve: Curves.easeInQuad,
       );
     });
@@ -313,9 +306,9 @@ class _SingleChatPageState extends State<SingleChatPage> {
             print(message.type);
             if (message.type == 'TEXT') {
               return _messageLayout(
-                name: "Me",
+                name: "Yo",
                 alignName: TextAlign.end,
-                color: primaryColor,
+                color: const Color.fromRGBO(142, 142, 142, 1),
                 time: DateFormat('hh:mm a').format(message.time!.toDate()),
                 align: TextAlign.left,
                 boxAlign: CrossAxisAlignment.start,
@@ -325,9 +318,9 @@ class _SingleChatPageState extends State<SingleChatPage> {
               );
             } else if (message.type == 'IMG') {
               return _imageLayout(
-                name: "Me",
+                name: "Yo",
                 alignName: TextAlign.end,
-                color: primaryColor,
+                color: const Color.fromRGBO(142, 142, 142, 1),
                 time: DateFormat('hh:mm a').format(message.time!.toDate()),
                 align: TextAlign.left,
                 boxAlign: CrossAxisAlignment.start,
@@ -337,9 +330,9 @@ class _SingleChatPageState extends State<SingleChatPage> {
               );
             } else if (message.type == 'VID') {
               return _videoLayout(
-                name: "Me",
+                name: "Yo",
                 alignName: TextAlign.end,
-                color: primaryColor,
+                color: const Color.fromRGBO(142, 142, 142, 1),
                 time: DateFormat('hh:mm a').format(message.time!.toDate()),
                 align: TextAlign.left,
                 boxAlign: CrossAxisAlignment.start,
@@ -349,9 +342,9 @@ class _SingleChatPageState extends State<SingleChatPage> {
               );
             } else if (message.type == 'AUDIO') {
               return _audioLayout(
-                name: "Me",
+                name: "Yo",
                 alignName: TextAlign.end,
-                color: primaryColor,
+                color: const Color.fromRGBO(142, 142, 142, 1),
                 time: DateFormat('hh:mm a').format(message.time!.toDate()),
                 align: TextAlign.left,
                 boxAlign: CrossAxisAlignment.start,
@@ -364,8 +357,10 @@ class _SingleChatPageState extends State<SingleChatPage> {
             // ignore: curly_braces_in_flow_control_structures
             if (message.type == 'TEXT') {
               return _messageLayout(
-                color: Colors.white,
+                color: const Color.fromRGBO(74, 77, 78, 1),
+                // textColor: Color.fromARGB(255, 253, 253, 253),
                 name: "${message.senderName}",
+                // colorName: Color.fromARGB(255, 103, 17, 169),
                 alignName: TextAlign.end,
                 time: DateFormat('hh:mm a').format(message.time!.toDate()),
                 align: TextAlign.left,
@@ -376,7 +371,7 @@ class _SingleChatPageState extends State<SingleChatPage> {
               );
             } else if (message.type == 'IMG') {
               return _imageLayout(
-                color: Colors.white,
+                color: const Color.fromRGBO(74, 77, 78, 1),
                 name: "${message.senderName}",
                 alignName: TextAlign.end,
                 time: DateFormat('hh:mm a').format(message.time!.toDate()),
@@ -388,7 +383,7 @@ class _SingleChatPageState extends State<SingleChatPage> {
               );
             } else if (message.type == 'VID') {
               return _videoLayout(
-                color: Colors.white,
+                color: const Color.fromRGBO(74, 77, 78, 1),
                 name: "${message.senderName}",
                 alignName: TextAlign.end,
                 time: DateFormat('hh:mm a').format(message.time!.toDate()),
@@ -400,7 +395,7 @@ class _SingleChatPageState extends State<SingleChatPage> {
               );
             } else if (message.type == 'AUDIO') {
               return _audioLayout(
-                color: Colors.white,
+                color: const Color.fromRGBO(74, 77, 78, 1),
                 name: "${message.senderName}",
                 alignName: TextAlign.end,
                 time: DateFormat('hh:mm a').format(message.time!.toDate()),
@@ -448,21 +443,23 @@ class _SingleChatPageState extends State<SingleChatPage> {
                   Text(
                     "$name",
                     textAlign: alignName,
-                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromRGBO(132, 200, 255, 1)),
                   ),
                   Text(
                     text,
                     textAlign: align,
-                    style: TextStyle(fontSize: 16),
+                    style: const TextStyle(
+                        fontSize: 16, color: Color.fromRGBO(247, 252, 252, 1)),
                   ),
                   Text(
                     time,
                     textAlign: align,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 12,
-                      color: Colors.black.withOpacity(
-                        .4,
-                      ),
+                      color: Color.fromRGBO(247, 252, 252, 1),
                     ),
                   )
                 ],
@@ -493,8 +490,8 @@ class _SingleChatPageState extends State<SingleChatPage> {
             maxWidth: MediaQuery.of(context).size.width * 0.90,
           ),
           child: Container(
-            padding: EdgeInsets.all(8),
-            margin: EdgeInsets.all(3),
+            padding: const EdgeInsets.all(8),
+            margin: const EdgeInsets.all(3),
             child: Bubble(
               color: color,
               nip: nip,
@@ -505,7 +502,10 @@ class _SingleChatPageState extends State<SingleChatPage> {
                   Text(
                     "$name",
                     textAlign: alignName,
-                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromRGBO(132, 200, 255, 1)),
                   ),
                   Image.network(
                     url,
@@ -514,11 +514,9 @@ class _SingleChatPageState extends State<SingleChatPage> {
                   Text(
                     time,
                     textAlign: align,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 12,
-                      color: Colors.black.withOpacity(
-                        .4,
-                      ),
+                      color: Color.fromRGBO(247, 252, 252, 1),
                     ),
                   )
                 ],
@@ -562,12 +560,18 @@ class _SingleChatPageState extends State<SingleChatPage> {
                   Text(
                     "$name",
                     textAlign: alignName,
-                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromRGBO(132, 200, 255, 1)),
                   ),
                   RichText(
                     text: TextSpan(
                       text: url,
-                      style: TextStyle(color: Colors.blue),
+                      style: const TextStyle(
+                          color: Color.fromARGB(255, 50, 112, 162),
+                          decoration: TextDecoration.underline,
+                          decorationThickness: 2),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
                           _launchURL(url.toString());
@@ -595,11 +599,9 @@ class _SingleChatPageState extends State<SingleChatPage> {
                   Text(
                     time,
                     textAlign: align,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 12,
-                      color: Colors.black.withOpacity(
-                        .4,
-                      ),
+                      color: Color.fromRGBO(247, 252, 252, 1),
                     ),
                   )
                 ],
@@ -643,7 +645,10 @@ class _SingleChatPageState extends State<SingleChatPage> {
                   Text(
                     "$name",
                     textAlign: alignName,
-                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromRGBO(132, 200, 255, 1)),
                   ),
                   ElevatedButton(
                     onPressed: () async {
@@ -656,9 +661,7 @@ class _SingleChatPageState extends State<SingleChatPage> {
                     textAlign: align,
                     style: TextStyle(
                       fontSize: 12,
-                      color: Colors.black.withOpacity(
-                        .4,
-                      ),
+                      color: Color.fromRGBO(247, 252, 252, 1),
                     ),
                   )
                 ],

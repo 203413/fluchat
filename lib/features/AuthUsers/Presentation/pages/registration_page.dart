@@ -56,7 +56,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
             });
           });
         } else {
-          print('No image selected.');
+          print('Sin imagen.');
         }
       });
     } catch (e) {
@@ -87,7 +87,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
           }
           if (credentialState is CredentialFailure) {
             snackBarNetwork(
-                msg: "wrong email please check", scaffoldState: _scaffoldState);
+                msg: "Correo inválido, revise por favor.",
+                scaffoldState: _scaffoldState);
           }
         },
         builder: (context, credentialState) {
@@ -104,7 +105,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     uid: authState.uid,
                   );
                 } else {
-                  print("Unauthenticsted");
+                  print("No autentificado");
                   return _bodyWidget();
                 }
               },
@@ -129,7 +130,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
             Container(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  'Registration',
+                  'Registro',
                   style: TextStyle(
                       fontSize: 35,
                       fontWeight: FontWeight.w700,
@@ -151,10 +152,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
               child: Column(
                 children: [
                   Container(
-                    height: 62,
-                    width: 62,
+                    height: 100,
+                    width: 100,
                     decoration: BoxDecoration(
-                      color: color747480,
+                      color: Color.fromRGBO(214, 241, 246, 1),
                       borderRadius: BorderRadius.all(Radius.circular(50)),
                     ),
                     child: ClipRRect(
@@ -165,7 +166,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     height: 12,
                   ),
                   Text(
-                    'Add profile photo',
+                    'Agregar una foto de perfil',
                     style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w400,
@@ -180,7 +181,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
             TextFieldContainer(
               controller: _usernameController,
               keyboardType: TextInputType.text,
-              hintText: 'Usuario',
+              hintText: 'Nombre de usuario',
               prefixIcon: Icons.person,
             ),
             SizedBox(
@@ -189,7 +190,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
             TextFieldContainer(
               controller: _emailController,
               keyboardType: TextInputType.emailAddress,
-              hintText: 'Email',
+              hintText: 'Correo electrónico',
               prefixIcon: Icons.mail,
             ),
             SizedBox(
@@ -197,8 +198,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
             ),
             Divider(
               thickness: 2,
-              indent: 120,
-              endIndent: 120,
+              indent: 100,
+              endIndent: 100,
             ),
             SizedBox(
               height: 17,
@@ -244,7 +245,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     prefixIcon: Icon(
                       Icons.lock,
                     ),
-                    hintText: 'Contraseña (de nuevo)',
+                    hintText: 'Contraseña (Repetir)',
                     hintStyle: TextStyle(color: Colors.black.withOpacity(0.3)),
                     border: InputBorder.none,
                     suffixIcon: GestureDetector(
@@ -266,7 +267,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
               onTap: _modalBottomSheetDate,
               child: Container(
                 height: 45,
-                padding: EdgeInsets.only(left: 15),
                 decoration: BoxDecoration(
                     color: color747480.withOpacity(.2),
                     borderRadius: BorderRadius.all(Radius.circular(10))),
@@ -274,6 +274,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   child: TextField(
                     controller: _dobController,
                     decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.date_range),
                       hintText: 'Fecha de nacimiento',
                       suffixIcon: Icon(Icons.keyboard_arrow_down_sharp),
                       border: InputBorder.none,
@@ -289,7 +290,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
               onTap: _genderModalBottomSheetMenu,
               child: Container(
                 height: 45,
-                padding: EdgeInsets.only(left: 15),
                 decoration: BoxDecoration(
                     color: color747480.withOpacity(.2),
                     borderRadius: BorderRadius.all(Radius.circular(10))),
@@ -297,6 +297,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   child: TextField(
                     controller: _genderController,
                     decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.people_alt),
                       hintText: 'Género',
                       suffixIcon: Icon(Icons.keyboard_arrow_down_sharp),
                       border: InputBorder.none,
@@ -318,12 +319,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(10)),
-                  color: darkPrimaryColor,
+                  color: Color.fromRGBO(18, 169, 221, 1),
                 ),
                 child: Text(
-                  'Register',
+                  'Registrarme',
                   style: TextStyle(
-                      color: Colors.white,
+                      color: Color.fromRGBO(247, 252, 252, 1),
                       fontSize: 17,
                       fontWeight: FontWeight.w700),
                 ),
@@ -337,7 +338,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    'Ya tienes una cuenta?',
+                    '¿Ya tienes cuenta? ',
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                   ),
                   SizedBox(
@@ -349,7 +350,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           context, PageConst.loginPage, (route) => false);
                     },
                     child: Text(
-                      'Logueate',
+                      'Inicia sesión',
                       style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
@@ -367,7 +368,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Haciendo click en registrarte, aceptas ',
+                    'Al hacer click en "registrarme", aceptas ',
                     style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w700,
@@ -402,7 +403,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         fontWeight: FontWeight.w700),
                   ),
                   Text(
-                    'de uso',
+                    'de uso.',
                     style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w700,
@@ -611,7 +612,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                               },
                               child: Icon(Icons.close)),
                           Text(
-                            'Date of birth',
+                            'Fecha de nacimiento',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.w700),
                           ),
@@ -647,25 +648,25 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   _submitSignUp() {
     if (_usernameController.text.isEmpty) {
-      toast('enter your username');
+      toast('Ingresa un nombre de usuario');
       return;
     }
     if (_emailController.text.isEmpty) {
-      toast('enter your email');
+      toast('Ingresa un correo electronico');
       return;
     }
     if (_passwordController.text.isEmpty) {
-      toast('enter your password');
+      toast('Ingresa una contraseña');
       return;
     }
     if (_passwordAgainController.text.isEmpty) {
-      toast('enter your again password');
+      toast('Repite la contraseña');
       return;
     }
 
     if (_passwordController.text == _passwordAgainController.text) {
     } else {
-      toast("both password must be same");
+      toast("Ambas contraseñas deben ser iguales");
       return;
     }
 
@@ -679,7 +680,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         dob: _dobController.text,
         password: _passwordController.text,
         isOnline: false,
-        status: "Hi! there i'm using this app",
+        status: "Hola! Estoy usando esta aplicación :)",
       ),
     );
   }

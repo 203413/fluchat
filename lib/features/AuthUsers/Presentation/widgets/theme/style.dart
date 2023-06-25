@@ -9,5 +9,5 @@ final Color textPrimaryColor = Color.fromRGBO(33, 33, 33, 1);
 final Color dividerColor = Color.fromRGBO(189, 189, 189, 1);
 final Color textIconColorGray = Colors.black;
 final Color greenColor = Color.fromRGBO(7, 90, 158, 1);
-final color747480 = Color.fromRGBO(116, 116, 128, 1);
+final color747480 = Color.fromRGBO(128, 128, 141, 1);
 final colorC1C1C1 = Color.fromRGBO(193, 193, 193, 1);

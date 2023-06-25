@@ -58,7 +58,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
             });
           });
         } else {
-          print('No image selected.');
+          print('No se seleccionó imagen.');
         }
       });
     } catch (e) {
@@ -83,7 +83,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
     return Scaffold(
       key: _scaffoldState,
       appBar: AppBar(
-        title: Text("Create group"),
+        title: Text("Crear grupo"),
       ),
       body: _bodyWidget(),
     );
@@ -102,8 +102,8 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
               child: Column(
                 children: [
                   Container(
-                    height: 62,
-                    width: 62,
+                    height: 100,
+                    width: 100,
                     decoration: BoxDecoration(
                       color: color747480,
                       borderRadius: BorderRadius.all(Radius.circular(50)),
@@ -116,7 +116,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
                     height: 12,
                   ),
                   Text(
-                    'Add Group Image',
+                    'Agregar foto de grupo',
                     style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w400,
@@ -131,8 +131,8 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
             TextFieldContainer(
               controller: _groupNameController,
               keyboardType: TextInputType.text,
-              hintText: 'group name',
-              prefixIcon: Icons.add_circle_outline,
+              hintText: 'Nombre del grupo',
+              prefixIcon: Icons.group,
             ),
             SizedBox(
               height: 10,
@@ -140,8 +140,8 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
             TextFieldContainer(
               controller: _numberUsersJoinController,
               keyboardType: TextInputType.emailAddress,
-              hintText: 'number of users join group',
-              prefixIcon: Icons.add_circle_outline,
+              hintText: 'Numero de usuarios permitidos',
+              prefixIcon: Icons.groups,
             ),
             SizedBox(
               height: 17,
@@ -167,7 +167,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
                   color: darkPrimaryColor,
                 ),
                 child: Text(
-                  'Create New Group',
+                  'Crear grupo nuevo',
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 17,
@@ -185,19 +185,28 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    'By clicking Create New Group, you agree to the ',
-                    style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700,
-                        color: colorC1C1C1),
+                  Flexible(
+                    child: Text(
+                      'Al hacer click en "Crear grupo nuevo", aceptas ',
+                      style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                          color: colorC1C1C1),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
-                  Text(
-                    'Privacy Policy',
-                    style: TextStyle(
-                        color: darkPrimaryColor,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700),
+                  SizedBox(width: 12),
+                  Flexible(
+                    child: Text(
+                      'Las políticas de privacidad',
+                      style: TextStyle(
+                          color: darkPrimaryColor,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ],
               ),
@@ -206,30 +215,42 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    'and ',
-                    style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700,
-                        color: colorC1C1C1),
+                  Flexible(
+                    child: Text(
+                      'y los ',
+                      style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                          color: colorC1C1C1),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
-                  Text(
-                    'terms ',
-                    style: TextStyle(
-                        color: darkPrimaryColor,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700),
+                  Flexible(
+                    child: Text(
+                      'términos ',
+                      style: TextStyle(
+                          color: darkPrimaryColor,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
-                  Text(
-                    'of use',
-                    style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700,
-                        color: colorC1C1C1),
+                  Flexible(
+                    child: Text(
+                      'de uso',
+                      style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                          color: colorC1C1C1),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -238,15 +259,15 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
 
   _submit() async {
     if (_image == null) {
-      toast('Add profile photo');
+      toast('Agrega una foto de perfil');
       return;
     }
     if (_groupNameController.text.isEmpty) {
-      toast('enter your surname');
+      toast('Ingresa tu apodo');
       return;
     }
     if (_numberUsersJoinController.text.isEmpty) {
-      toast('enter your email');
+      toast('Ingresa tu correo electrónico');
       return;
     }
 
@@ -260,7 +281,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
       joinUsers: "0",
       limitUsers: _numberUsersJoinController.text,
     ));
-    toast("${_groupNameController.text} created successfully");
+    toast("${_groupNameController.text} creado correctamente");
     _clear();
   }
 

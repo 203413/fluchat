@@ -132,7 +132,7 @@ class _HomePageState extends State<HomePage> {
                               Navigator.pop(context);
                               BlocProvider.of<AuthCubit>(context).loggedOut();
                             },
-                            child: Text("logout")),
+                            child: Text("Cerrar sesión")),
                         enabled: true,
                       ),
                     ];

@@ -66,7 +66,7 @@ class _ProfilePageState extends State<ProfilePage> {
             });
           });
         } else {
-          print('No image selected.');
+          print('Imagen no seleccionada.');
         }
       });
     } catch (e) {
@@ -101,29 +101,32 @@ class _ProfilePageState extends State<ProfilePage> {
             SizedBox(
               height: 10,
             ),
+            SizedBox(
+              height: 15,
+            ),
             GestureDetector(
               onTap: () {
                 getImage();
               },
               child: Container(
-                height: 62,
-                width: 62,
+                height: 100,
+                width: 100,
                 decoration: BoxDecoration(
-                  color: color747480,
-                  borderRadius: BorderRadius.all(Radius.circular(50)),
+                  color: Color.fromRGBO(150, 150, 150, 1),
+                  borderRadius: BorderRadius.all(Radius.circular(75)),
                 ),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(50)),
+                  borderRadius: BorderRadius.all(Radius.circular(75)),
                   child:
                       profileWidget(imageUrl: user.profileUrl, image: _image),
                 ),
               ),
             ),
             SizedBox(
-              height: 14,
+              height: 15,
             ),
             Text(
-              'Remove profile photo',
+              'Eliminar foto de perfil',
               style: TextStyle(
                   color: darkPrimaryColor,
                   fontSize: 16,
@@ -151,7 +154,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     Icons.person,
                     color: Colors.grey,
                   ),
-                  hintText: 'username',
+                  hintText: 'Nombre de usuario',
                   hintStyle:
                       TextStyle(fontSize: 17, fontWeight: FontWeight.w400),
                 ),
@@ -177,7 +180,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       Icons.mail,
                       color: Colors.grey,
                     ),
-                    hintText: 'email',
+                    hintText: 'Correo electrónico',
                     hintStyle:
                         TextStyle(fontSize: 17, fontWeight: FontWeight.w400),
                   ),
@@ -200,10 +203,10 @@ class _ProfilePageState extends State<ProfilePage> {
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   prefixIcon: Icon(
-                    Icons.signal_wifi_statusbar_4_bar,
+                    Icons.article,
                     color: Colors.grey,
                   ),
-                  hintText: 'status',
+                  hintText: 'Estado',
                   hintStyle:
                       TextStyle(fontSize: 17, fontWeight: FontWeight.w400),
                 ),
@@ -228,16 +231,16 @@ class _ProfilePageState extends State<ProfilePage> {
                 _updateProfile();
               },
               child: Container(
-                  margin: EdgeInsets.only(left: 22, right: 22),
+                  margin: EdgeInsets.only(left: 60, right: 60),
                   alignment: Alignment.center,
                   height: 44,
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    color: darkPrimaryColor,
+                    color: Color.fromRGBO(18, 169, 221, 1),
                     borderRadius: BorderRadius.all(Radius.circular(10)),
                   ),
                   child: Text(
-                    'Update',
+                    'Actualizar',
                     style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w700,
@@ -259,6 +262,6 @@ class _ProfilePageState extends State<ProfilePage> {
         profileUrl: _profileUrl!,
       ),
     );
-    toast("Profile Updated");
+    toast("Perfil actualizado");
   }
 }
