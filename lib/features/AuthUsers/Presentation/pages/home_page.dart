@@ -97,7 +97,8 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: _isSearch == false ? primaryColor : Colors.transparent,
+        backgroundColor:
+            _isSearch == false ? Color(0xFF0A6AA6) : Colors.transparent,
         title: _isSearch == false
             ? Text("FluChat")
             : Container(

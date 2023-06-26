@@ -84,6 +84,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
       key: _scaffoldState,
       appBar: AppBar(
         title: Text("Crear grupo"),
+        backgroundColor: Color(0xFF0A6AA6),
       ),
       body: _bodyWidget(),
     );

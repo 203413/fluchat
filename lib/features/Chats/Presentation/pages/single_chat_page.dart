@@ -69,7 +69,9 @@ class _SingleChatPageState extends State<SingleChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       // appBar: appBarMain(context),
+
       appBar: AppBar(
+        backgroundColor: Color(0xFF065B9E),
         title: Text("${widget.singleChatEntity.groupName}"),
       ),
       body: BlocBuilder<ChatCubit, ChatState>(

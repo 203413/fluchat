@@ -22,7 +22,7 @@ class _CustomTabBarState extends State<CustomTabBar> {
     return Container(
       height: 50,
       decoration: BoxDecoration(
-        color: primaryColor,
+        color: Color(0xFF0A6AA6),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
