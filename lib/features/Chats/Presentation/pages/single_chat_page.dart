@@ -16,11 +16,13 @@ import 'package:proyecto_c2/features/Chats/Domain/entities/text_messsage_entity.
 import 'package:proyecto_c2/features/Chats/Presentation/cubit/chat/chat_cubit.dart';
 import 'package:proyecto_c2/features/Chats/Presentation/cubit/group/group_cubit.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:proyecto_c2/features/Chats/Presentation/pages/view_pdf.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:video_player/video_player.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class SingleChatPage extends StatefulWidget {
   final SingleChatEntity singleChatEntity;
@@ -36,6 +38,9 @@ class _SingleChatPageState extends State<SingleChatPage> {
   late String vidurl;
   late String audiourl;
   String messageContent = "";
+  String? pdf;
+  String? message;
+  final GlobalKey<SfPdfViewerState> pdfViewerKey = GlobalKey();
   TextEditingController _messageController = TextEditingController();
   ScrollController _scrollController = ScrollController();
   bool _changeKeyboardType = false;
@@ -206,10 +211,55 @@ class _SingleChatPageState extends State<SingleChatPage> {
                               ),
                             )
                           : Text(""),
+                      const SizedBox(
+                        width: 10,
+                      ),
                     ],
                   ),
-                  SizedBox(
-                    width: 15,
+                  GestureDetector(
+                    onTap: () async {
+                      FilePickerResult? filePickerResult =
+                          await FilePicker.platform.pickFiles(
+                        type: FileType.custom,
+                        allowedExtensions: ['pdf'],
+                      );
+
+                      if (filePickerResult != null) {
+                        String url = await uploadFile(
+                          'pdfs/${filePickerResult.files.single.name}',
+                          File(filePickerResult.files.single.path!),
+                        );
+                        setState(() {
+                          message = null;
+                          pdf = url;
+                        });
+                      } else {
+                        setState(() {
+                          message = 'No se seleccionó ningún PDF';
+                        });
+                      }
+                      BlocProvider.of<ChatCubit>(context).sendTextMessage(
+                          textMessageEntity: TextMessageEntity(
+                              time: Timestamp.now(),
+                              senderId: widget.singleChatEntity.uid,
+                              content: pdf,
+                              senderName: widget.singleChatEntity.username,
+                              type: "PDF"),
+                          channelId: widget.singleChatEntity.groupId);
+                      BlocProvider.of<GroupCubit>(context).updateGroup(
+                          groupEntity: GroupEntity(
+                        groupId: widget.singleChatEntity.groupId,
+                        lastMessage: _messageController.text,
+                        creationTime: Timestamp.now(),
+                      ));
+                    },
+                    child: Icon(
+                      LineIcons.pdfFile,
+                      color: const Color.fromRGBO(0, 183, 247, 1),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 10,
                   ),
                 ],
               ),
@@ -354,6 +404,18 @@ class _SingleChatPageState extends State<SingleChatPage> {
                 nip: BubbleNip.rightTop,
                 url: message.content,
               );
+            } else if (message.type == 'PDF') {
+              return _pdfLayout(
+                name: "Yo",
+                alignName: TextAlign.end,
+                color: const Color.fromRGBO(142, 142, 142, 1),
+                time: DateFormat('hh:mm a').format(message.time!.toDate()),
+                align: TextAlign.left,
+                boxAlign: CrossAxisAlignment.start,
+                crossAlign: CrossAxisAlignment.end,
+                nip: BubbleNip.rightTop,
+                url: message.content,
+              );
             }
           } else {
             // ignore: curly_braces_in_flow_control_structures
@@ -397,6 +459,18 @@ class _SingleChatPageState extends State<SingleChatPage> {
               );
             } else if (message.type == 'AUDIO') {
               return _audioLayout(
+                color: const Color.fromRGBO(74, 77, 78, 1),
+                name: "${message.senderName}",
+                alignName: TextAlign.end,
+                time: DateFormat('hh:mm a').format(message.time!.toDate()),
+                align: TextAlign.left,
+                boxAlign: CrossAxisAlignment.start,
+                crossAlign: CrossAxisAlignment.start,
+                nip: BubbleNip.leftTop,
+                url: message.content,
+              );
+            } else if (message.type == 'PDF') {
+              return _pdfLayout(
                 color: const Color.fromRGBO(74, 77, 78, 1),
                 name: "${message.senderName}",
                 alignName: TextAlign.end,
@@ -662,6 +736,75 @@ class _SingleChatPageState extends State<SingleChatPage> {
                     time,
                     textAlign: align,
                     style: TextStyle(
+                      fontSize: 12,
+                      color: Color.fromRGBO(247, 252, 252, 1),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget _pdfLayout({
+    url,
+    time,
+    color,
+    align,
+    boxAlign,
+    nip,
+    crossAlign,
+    String? name,
+    alignName,
+  }) {
+    print(url);
+    return Column(
+      crossAxisAlignment: crossAlign,
+      children: [
+        ConstrainedBox(
+          constraints: BoxConstraints(
+            maxWidth: MediaQuery.of(context).size.width * 0.90,
+          ),
+          child: Container(
+            padding: EdgeInsets.all(8),
+            margin: EdgeInsets.all(3),
+            child: Bubble(
+              color: color,
+              nip: nip,
+              child: Column(
+                crossAxisAlignment: crossAlign,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    "$name",
+                    textAlign: alignName,
+                    style: const TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromRGBO(132, 200, 255, 1)),
+                  ),
+                  GestureDetector(
+                      onTap: () {
+                        print('dfdf');
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PdfPage(pdfUrl: url),
+                          ),
+                        );
+                      },
+                      child: Text(url)),
+                  // SfPdfViewer.network(
+                  //   pdf!,
+                  //   key: pdfViewerKey,
+                  // ),
+                  Text(
+                    time,
+                    textAlign: align,
+                    style: const TextStyle(
                       fontSize: 12,
                       color: Color.fromRGBO(247, 252, 252, 1),
                     ),
