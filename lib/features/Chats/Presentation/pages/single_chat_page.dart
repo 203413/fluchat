@@ -18,11 +18,13 @@ import 'package:proyecto_c2/features/Chats/Presentation/cubit/group/group_cubit.
 import 'package:image_picker/image_picker.dart';
 import 'package:proyecto_c2/features/Chats/Presentation/pages/view_pdf.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import 'package:video_player/video_player.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+import 'package:geolocator/geolocator.dart';
 
 class SingleChatPage extends StatefulWidget {
   final SingleChatEntity singleChatEntity;
@@ -67,6 +69,42 @@ class _SingleChatPageState extends State<SingleChatPage> {
     _vidController?.dispose();
     _audioPlayer.dispose();
     super.dispose();
+  }
+
+  late String lat;
+  late String long;
+
+  Future<Position> _getCurrentLocation() async {
+    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return Future.error('Nopi');
+    }
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('nop2');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error('error');
+    }
+    return await Geolocator.getCurrentPosition();
+  }
+
+  Future<void> _openMap(String location) async {
+    List<String> coordenadasSeparadas = location.split('|');
+
+    String variable1 = coordenadasSeparadas[0];
+    String variable2 = coordenadasSeparadas[1];
+
+    print("Variable 1: $variable1");
+    print("Variable 2: $variable2");
+    String googleURL =
+        'https://www.google.com/maps/search/?api=1&query=$variable1,$variable2';
+    var uri = Uri.parse(googleURL);
+    await canLaunchUrl(uri) ? await launchUrl(uri) : throw 'nopu';
   }
 
   check() {}
@@ -261,6 +299,69 @@ class _SingleChatPageState extends State<SingleChatPage> {
                   const SizedBox(
                     width: 10,
                   ),
+                  GestureDetector(
+                    onTap: () async {
+                      // FilePickerResult? filePickerResult =
+                      //     await FilePicker.platform.pickFiles(
+                      //   type: FileType.custom,
+                      //   allowedExtensions: ['pdf'],
+                      // );
+
+                      // if (filePickerResult != null) {
+                      //   String url = await uploadFile(
+                      //     'pdfs/${filePickerResult.files.single.name}',
+                      //     File(filePickerResult.files.single.path!),
+                      //   );
+                      //   setState(() {
+                      //     message = null;
+                      //     pdf = url;
+                      //   });
+                      // } else {
+                      //   setState(() {
+                      //     message = 'No se seleccionó ningún PDF';
+                      //   });
+                      // }
+                      // BlocProvider.of<ChatCubit>(context).sendTextMessage(
+                      //     textMessageEntity: TextMessageEntity(
+                      //         time: Timestamp.now(),
+                      //         senderId: widget.singleChatEntity.uid,
+                      //         content: pdf,
+                      //         senderName: widget.singleChatEntity.username,
+                      //         type: "PDF"),
+                      //     channelId: widget.singleChatEntity.groupId);
+                      // BlocProvider.of<GroupCubit>(context).updateGroup(
+                      //     groupEntity: GroupEntity(
+                      //   groupId: widget.singleChatEntity.groupId,
+                      //   lastMessage: _messageController.text,
+                      //   creationTime: Timestamp.now(),
+                      // ));
+                      print('gola');
+                      _getCurrentLocation().then((value) => {
+                            lat = '${value.latitude}',
+                            long = '${value.longitude}'
+                          });
+                      String location = lat + "|" + long;
+                      print(location);
+                      BlocProvider.of<ChatCubit>(context).sendTextMessage(
+                          textMessageEntity: TextMessageEntity(
+                              time: Timestamp.now(),
+                              senderId: widget.singleChatEntity.uid,
+                              content: location,
+                              senderName: widget.singleChatEntity.username,
+                              type: "LOCATION"),
+                          channelId: widget.singleChatEntity.groupId);
+                      BlocProvider.of<GroupCubit>(context).updateGroup(
+                          groupEntity: GroupEntity(
+                        groupId: widget.singleChatEntity.groupId,
+                        lastMessage: _messageController.text,
+                        creationTime: Timestamp.now(),
+                      ));
+                    },
+                    child: Icon(
+                      LineIcons.locationArrow,
+                      color: const Color.fromRGBO(0, 183, 247, 1),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -415,6 +516,18 @@ class _SingleChatPageState extends State<SingleChatPage> {
                 crossAlign: CrossAxisAlignment.end,
                 nip: BubbleNip.rightTop,
                 url: message.content,
+              );
+            } else if (message.type == 'LOCATION') {
+              return _locationLayout(
+                name: "Yo",
+                alignName: TextAlign.end,
+                color: const Color.fromRGBO(142, 142, 142, 1),
+                time: DateFormat('hh:mm a').format(message.time!.toDate()),
+                align: TextAlign.left,
+                boxAlign: CrossAxisAlignment.start,
+                crossAlign: CrossAxisAlignment.end,
+                nip: BubbleNip.rightTop,
+                location: message.content,
               );
             }
           } else {
@@ -801,6 +914,64 @@ class _SingleChatPageState extends State<SingleChatPage> {
                   //   pdf!,
                   //   key: pdfViewerKey,
                   // ),
+                  Text(
+                    time,
+                    textAlign: align,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: Color.fromRGBO(247, 252, 252, 1),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget _locationLayout({
+    location,
+    time,
+    color,
+    align,
+    boxAlign,
+    nip,
+    crossAlign,
+    String? name,
+    alignName,
+  }) {
+    return Column(
+      crossAxisAlignment: crossAlign,
+      children: [
+        ConstrainedBox(
+          constraints: BoxConstraints(
+            maxWidth: MediaQuery.of(context).size.width * 0.90,
+          ),
+          child: Container(
+            padding: EdgeInsets.all(8),
+            margin: EdgeInsets.all(3),
+            child: Bubble(
+              color: color,
+              nip: nip,
+              child: Column(
+                crossAxisAlignment: crossAlign,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    "$name",
+                    textAlign: alignName,
+                    style: const TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromRGBO(132, 200, 255, 1)),
+                  ),
+                  ElevatedButton(
+                      onPressed: () {
+                        _openMap(location);
+                      },
+                      child: Text('Ver locación')),
                   Text(
                     time,
                     textAlign: align,
